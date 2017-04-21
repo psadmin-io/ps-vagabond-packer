@@ -21,15 +21,6 @@ You need the following to run the template:
 
 1. [Packer](https://packer.io/docs/installation.html) installed with a minimum version of 0.12.3.
 2. [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Tested with 5.1.12
-3. [Berkshelf](http://berkshelf.com/) - Used to find and vendor Chef cookbook dependencies. This is easist installing via the [ChefDK](https://downloads.chef.io/chef-dk/)
-
-## Vendoring the cookbooks
-The Windows 2016 templates use the `packer-templates` Chef cookbook to provision the image. The cookbook located in `cookbooks/packer-templates` has dependencies on a few community cookbooks. These cookbooks need to be downloaded. To do this:
-
-1. `cd` to `cookbooks/packer-templates`
-2. Run `berks vendor ../../vendor/cookbooks`
-
-This downloads all dependencies and saves them in vendor/cookbooks. From here packer will upload them to the image being built.
 
 ## Invoking the template
 Invoke `packer` to run a template like this:
