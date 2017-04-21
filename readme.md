@@ -1,4 +1,16 @@
-# packer-templates
+# ps-vagabond Packer Templates
+
+> This repository is a clone of mwrock/packer-templates.
+
+These templates are used to generate the ps-vagabond-* vagrant base boxes found on Atlas. To build the VirtualBox templates:
+
+```
+packer build -force -only virtualbox-iso ps-vagabond.json
+```
+
+
+## Background
+
 A Packer template that simplifies the creation of minimally-sized, fully patched Windows Vagrant boxes.
 
 This repo and much of its content are covered in detail from [this blog post](http://www.hurryupandwait.io/blog/creating-windows-base-images-for-virtualbox-and-hyper-v-using-packer-boxstarter-and-vagrant). Also see [this post](http://www.hurryupandwait.io/blog/a-packer-template-for-windows-nano-server-weighing-300mb) specifically for the Nano Server template.
