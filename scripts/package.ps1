@@ -26,11 +26,6 @@ if(Test-PendingReboot){ Invoke-Reboot }
 
 Write-BoxstarterMessage "Setting up winrm"
 netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-# cmd.exe /c netsh advfirewall firewall set rule group="remote administration" new enable=yes
-# cmd.exe /c netsh firewall add portopening TCP 5985 "Port 5985"
-netsh advfirewall firewall add rule name="PIA" dir=in localport=8000 protocol=TCP action=allow
-netsh advfirewall firewall add rule name="Oracle" dir=in localport=1522 protocol=TCP action=allow
-# cmd.exe /c netsh advfirewall set allprofiles state off
 
 $enableArgs=@{Force=$true}
 try {

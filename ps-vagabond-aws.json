@@ -4,6 +4,7 @@
       "type": "virtualbox-iso",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "8192" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "48" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
@@ -29,9 +30,47 @@
         "scripts/SetupComplete-2012.cmd",
         "scripts/Test-Command.ps1"
       ]
+    },
+    {
+      "type": "amazon-ebs",
+      "region": "us-east-1",
+      "source_ami": "ami-11e84107",
+      "instance_type": "t2.large",
+      "ami_name": "ps-vagabond-win-1.0.6",
+      "user_data_file":"./userdata.ps1",
+      "associate_public_ip_address":true,
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "1h", 
+      "winrm_port":5985,
+      "launch_block_device_mappings": [{
+        "device_name": "/dev/sda1",
+        "volume_size": 200,
+        "volume_type": "gp2",
+        "encrypted": false,
+        "delete_on_termination": true
+      }],
+      "ami_block_device_mappings": [{
+        "device_name": "/dev/sda1",
+        "volume_size": 200,
+        "volume_type": "gp2",
+        "encrypted": false,
+        "delete_on_termination": true
+      }],
+      "subnet_id": "subnet-2dc13274",
+      "security_group_id": "sg-bded81c2",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}"
     }
   ],
   "provisioners": [
+    {
+      "type": "powershell",
+      "inline": ["(iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')))>$null 2>&1"],
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
     {
       "type": "powershell",
       "inline": ["choco install powershell -y"],
@@ -48,6 +87,7 @@
     },
     {
       "type": "powershell",
+      "only": ["virtualbox-iso"],
       "script": "scripts/provision.ps1"
     },
     {
@@ -69,6 +109,7 @@
     "headless": "true",
     "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+    "atlas_token": "{{ env `ATLAS_TOKEN` }}",
     "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
     "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
   }
