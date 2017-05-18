@@ -100,27 +100,7 @@
       "keep_input_artifact": false,
       "output": "ps-vagabond-win-{{.Provider}}.box",
       "vagrantfile_template": "vagrantfile-windows.template"
-    // },
-    // {
-    //     "type": "atlas",
-    //     "only": ["virtualbox-iso"],
-    //     "artifact": "psadmin-io/ps-vagabond-win",
-    //     "artifact_type": "vagrant.box",
-    //     "metadata": {
-    //       "provider": "virtualbox",
-    //       "version": "1.0.0"
-    //     }
-    //   },
-    //   {
-    //     "type": "atlas",
-    //     "only": ["amazon-ebs"],
-    //     "artifact": "psadmin-io/ps-vagabond-win-aws",
-    //     "artifact_type": "amazon.image",
-    //     "metadata": {
-    //       "provider": "aws",
-    //       "version": "1.0.6"
-    //     }
-      }]
+    }]
   ],
   "variables": {
     "core": "",
