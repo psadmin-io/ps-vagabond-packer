@@ -22,12 +22,12 @@
       "shutdown_timeout": "15m",
       "floppy_files": [
         "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
-        "scripts/postunattend.xml",
-        "scripts/boxstarter.ps1",
-        "scripts/PackerShutdown.bat",
-        "scripts/package.ps1",
-        "scripts/SetupComplete-2012.cmd",
-        "scripts/Test-Command.ps1"
+        "scripts/win/postunattend.xml",
+        "scripts/win/boxstarter.ps1",
+        "scripts/win/PackerShutdown.bat",
+        "scripts/win/package.ps1",
+        "scripts/win/SetupComplete-2012.cmd",
+        "scripts/win/Test-Command.ps1"
       ]
     }
   ],
@@ -48,11 +48,11 @@
     },
     {
       "type": "powershell",
-      "script": "scripts/provision.ps1"
+      "script": "scripts/win/provision.ps1"
     },
     {
       "type": "powershell",
-      "script": "scripts/provision-psadmin.ps1"
+      "script": "scripts/win/provision-psadmin.ps1"
     }
   ],
   "post-processors": [
