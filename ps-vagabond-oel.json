@@ -1,6 +1,6 @@
 {
   "description": "Packer template for ps-vagabond base box",
-  "_comment": "Build with `packer build vagabond_ol7.json`",
+  "_comment": "Build with `packer build ps-vagabond-oel.json`",
   "variables": {
     "cpus": "1",
     "disk_size": "163840",
