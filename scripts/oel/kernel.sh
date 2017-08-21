@@ -9,12 +9,6 @@ function echoinfo() {
   printf "${BC} ☆  INFO${EC}: %s\n" "$@";
 }
 
-function use_redhat_kernel() {
-  echoinfo "Disabling transparent hugepages"
-  sed -i 's/^GRUB_DEFAULT=saved/GRUB_DEFAULT=0/' /etc/default/grub
-  grub2-mkconfig -o /boot/grub2/grub.cfg
-}
-
 function disable_transparent_hugepages() {
   echoinfo "Disabling transparent hugepages"
   sed -i 's/^GRUB_CMDLINE_LINUX.*quiet/& transparent_hugepages=never/' /etc/default/grub
@@ -27,7 +21,6 @@ function disable_tuned() {
   systemctl disable tuned
 }
 
-use_redhat_kernel
 disable_transparent_hugepages
 disable_tuned
 
