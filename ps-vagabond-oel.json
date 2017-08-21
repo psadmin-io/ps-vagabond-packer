@@ -13,11 +13,10 @@
     "kickstart": "ks7.cfg",
     "memory": "512",
     "packer_base": "{{env `PACKER_BASE`}}",
-    "puppet_version": "latest",
     "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "version_description": "Update vbox guest additions and packages",
     "virtualbox_guest_os_type": "Oracle_64",
     "vm_name": "ps-vagabond_ol7"
@@ -57,19 +56,9 @@
     "keep_input_artifact": false,
     "output": "{{ user `packer_base` }}/box/{{.Provider}}/{{user `vm_name`}}.box",
     "compression_level": 9
-  }, {
-    "type": "atlas",
-    "artifact": "jrbing/ps-vagabond",
-    "artifact_type": "vagrant.box",
-    "metadata": {
-      "description": "{{ user `version_description`}}",
-      "provider": "virtualbox",
-      "version": "{{ user `version` }}"
-    }
   }],
   "provisioners": [{
     "environment_vars": [
-      "PUPPET_VERSION={{ user `puppet_version` }}",
       "SSH_USERNAME={{ user `ssh_username` }}",
       "SSH_PASSWORD={{ user `ssh_password` }}"
     ],
@@ -82,7 +71,6 @@
       "scripts/oel/aria.sh",
       "scripts/oel/vagrant.sh",
       "scripts/oel/virtualbox.sh",
-      "scripts/oel/puppet.sh",
       "scripts/oel/motd.sh",
       "scripts/oel/cleanup.sh"
     ],
