@@ -6,6 +6,7 @@ before_script:
 stages:
   - validate
   - inspect
+  - build
 
 validate-packerfile:
   stage: validate
@@ -16,3 +17,9 @@ inspect-packerfile:
   stage: inspect
   script:
     - packer inspect ps-vagabond-oel.json
+
+build-oel-hyperv:
+  stage: build
+  script:
+    - packer build -only=hyperv ps-vagabond-oel.json
+  when: manual
