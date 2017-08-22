@@ -15,8 +15,8 @@ build: $(packer_templates)  ## Build all packer templates
 	@packer build $(patsubst %,%;,$^)
 
 clean:  ## Remove box files and output
-	rm -fv $(packer_base)/box/**/*.box
-	rm -rfv $(packer_base)/output/*
+	@rm -fv $(packer_base)/box/**/*.box
+	@rm -rfv $(packer_base)/output/*
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
