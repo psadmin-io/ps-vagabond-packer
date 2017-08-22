@@ -1,56 +1,58 @@
 {
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "8192" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
-      ],
-      "guest_additions_mode": "{{ user `guest_additions_mode` }}",
-      "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
-      "guest_os_type": "Windows2012_64",
-      "disk_size": "204800",
-      "headless": "{{ user `headless` }}",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "communicator": "winrm",
-      "winrm_username": "vagrant",
-      "winrm_password": "vagrant",
-      "winrm_timeout": "12h",
-      "shutdown_command": "a:/PackerShutdown.bat",
-      "shutdown_timeout": "15m",
-      "floppy_files": [
-        "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
-        "scripts/win/postunattend.xml",
-        "scripts/win/boxstarter.ps1",
-        "scripts/win/PackerShutdown.bat",
-        "scripts/win/package.ps1",
-        "scripts/win/SetupComplete-2012.cmd",
-        "scripts/win/Test-Command.ps1"
-      ]
-    }
-  ],
-  "provisioners": [
-    {
+  "description": "Packer template for ps-vagabond-win base box",
+  "_comment": "Build with `packer build ps-vagabond-win.json`",
+  "variables": {
+    "core": "",
+    "guest_additions_mode": "attach",
+    "headless": "true",
+    "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+  },
+  "builders": [{
+    "type": "virtualbox-iso",
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--memory", "8192"],
+      ["modifyvm", "{{.Name}}", "--cpus", "2"]
+    ],
+    "guest_additions_mode": "{{ user `guest_additions_mode` }}",
+    "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
+    "guest_os_type": "Windows2012_64",
+    "disk_size": "204800",
+    "headless": "{{ user `headless` }}",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
+    "iso_checksum_type": "sha1",
+    "communicator": "winrm",
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "winrm_timeout": "12h",
+    "shutdown_command": "a:/PackerShutdown.bat",
+    "shutdown_timeout": "15m",
+    "floppy_files": [
+      "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
+      "scripts/win/postunattend.xml",
+      "scripts/win/boxstarter.ps1",
+      "scripts/win/PackerShutdown.bat",
+      "scripts/win/package.ps1",
+      "scripts/win/SetupComplete-2012.cmd",
+      "scripts/win/Test-Command.ps1"
+    ]
+  }],
+  "provisioners": [{
       "type": "powershell",
       "inline": ["choco install powershell -y"],
       "elevated_user": "vagrant",
       "elevated_password": "vagrant",
-      "valid_exit_codes": [
-        0,
-        3010
-      ]
-    },
-    {
+      "valid_exit_codes": [ 0, 3010 ]
+    },{
       "type": "windows-restart",
       "restart_timeout": "1h"
-    },
-    {
+    },{
       "type": "powershell",
       "script": "scripts/win/provision.ps1"
-    },
-    {
+    },{
       "type": "powershell",
       "script": "scripts/win/provision-psadmin.ps1"
     }
@@ -62,14 +64,5 @@
       "output": "ps-vagabond-win-{{.Provider}}.box",
       "vagrantfile_template": "templates/vagrantfile-windows.template"
     }]
-  ],
-  "variables": {
-    "core": "",
-    "guest_additions_mode": "attach",
-    "headless": "true",
-    "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
-    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
-    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
-  }
+  ]
 }
