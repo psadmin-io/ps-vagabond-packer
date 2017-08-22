@@ -28,3 +28,14 @@ build-oel-hyperv:
   tags:
     - windows
     - hyperv
+
+build-oel-virtualbox:
+  stage: build
+  variables:
+    PACKER_BASE: 'D:\packer_base'
+  script:
+    - packer build -only=virtualbox ps-vagabond-oel.json
+  when: manual
+  tags:
+    - windows
+    - virtualbox
