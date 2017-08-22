@@ -23,3 +23,6 @@ build-oel-hyperv:
   script:
     - packer build -only=hyperv ps-vagabond-oel.json
   when: manual
+  tags:
+    - windows
+    - hyperv
