@@ -1,0 +1,13 @@
+---
+
+before-script:
+  - packer version
+
+stages:
+  - validate
+
+validate-packerfile:
+  stage: validate
+  script:
+    - packer validate ps-vagabond-oel.json
+    - packer inspect ps-vagabond-oel.json
