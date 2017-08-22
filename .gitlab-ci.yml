@@ -5,9 +5,14 @@ before_script:
 
 stages:
   - validate
+  - inspect
 
 validate-packerfile:
   stage: validate
   script:
     - packer validate ps-vagabond-oel.json
+
+inspect-packerfile:
+  stage: inspect
+  script:
     - packer inspect ps-vagabond-oel.json
