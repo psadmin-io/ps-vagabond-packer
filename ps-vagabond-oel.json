@@ -1,5 +1,5 @@
 {
-  "description": "Packer template for ps-vagabond base box",
+  "description": "Packer template for ps-vagabond-oel base box",
   "_comment": "Build with `packer build ps-vagabond-oel.json`",
   "variables": {
     "cpus": "1",
@@ -10,52 +10,77 @@
     "iso_name": "OracleLinux-R7-U3-Server-x86_64-dvd.iso",
     "iso_path": "{{env `PACKER_BASE`}}/iso",
     "iso_url": "http://mirrors.kernel.org/oracle/OL7/u3/x86_64/OracleLinux-R7-U3-Server-x86_64-dvd.iso",
-    "kickstart": "ks7.cfg",
     "memory": "512",
     "packer_base": "{{env `PACKER_BASE`}}",
     "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
     "version": "1.0.2",
-    "version_description": "Update vbox guest additions and packages",
+    "version_description": "Updates and new HyperV version",
     "virtualbox_guest_os_type": "Oracle_64",
     "vm_name": "ps-vagabond_ol7"
   },
   "builders": [{
-    "boot_command": [
-      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/{{ user `kickstart` }}<enter>"
-    ],
-    "boot_wait": "10s",
-    "disk_size": "{{ user `disk_size` }}",
-    "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-    "guest_os_type": "{{ user `virtualbox_guest_os_type` }}",
-    "hard_drive_interface": "sata",
-    "headless": "{{ user `headless` }}",
-    "http_directory": "http",
-    "iso_checksum": "{{ user `iso_checksum` }}",
-    "iso_checksum_type": "{{ user `iso_checksum_type` }}",
-    "iso_urls": [
-      "{{ user `iso_path` }}/{{ user `iso_name` }}",
-      "{{ user `iso_url` }}"
-    ],
-    "output_directory": "{{ user `packer_base` }}/output",
-    "shutdown_command": "{{ user `shutdown_command` }}",
-    "ssh_password": "{{ user `ssh_password` }}",
-    "ssh_username": "{{ user `ssh_username` }}",
-    "ssh_wait_timeout": "10000s",
-    "type": "virtualbox-iso",
-    "vboxmanage": [
-      ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
-      ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"]
-    ],
-    "virtualbox_version_file": ".vbox_version",
-    "vm_name": "{{ user `vm_name` }}"
-  }],
-  "post-processors": [{
-    "type": "vagrant",
-    "keep_input_artifact": false,
-    "output": "{{ user `packer_base` }}/box/{{.Provider}}/{{user `vm_name`}}.box",
-    "compression_level": 9
+      "name": "virtualbox",
+      "type": "virtualbox-iso",
+      "vm_name": "{{ user `vm_name` }}",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ks7.cfg<enter>"
+      ],
+      "disk_size": "{{ user `disk_size` }}",
+      "boot_wait": "10s",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_os_type": "{{ user `virtualbox_guest_os_type` }}",
+      "hard_drive_interface": "sata",
+      "headless": "{{ user `headless` }}",
+      "http_directory": "http",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_urls": [
+        "{{ user `iso_path` }}/{{ user `iso_name` }}",
+        "{{ user `iso_url` }}"
+      ],
+      "output_directory": "{{ user `packer_base` }}/output",
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "communicator": "ssh",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_wait_timeout": "10000s",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
+        ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"]
+      ],
+      "virtualbox_version_file": ".vbox_version"
+    },{
+      "name": "hyperv",
+      "type": "hyperv-iso",
+      "vm_name": "{{ user `vm_name` }}",
+      "boot_command": [
+        "c",
+        "linuxefi /images/pxeboot/vmlinuz inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks7efi.cfg<enter>",
+        "initrdefi /images/pxeboot/initrd.img<enter>",
+        "boot<enter>"
+      ],
+      "disk_size": "{{ user `disk_size` }}",
+      "boot_wait": "10s",
+      "guest_additions_mode": "disable",
+      "http_directory": "./http",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+      "iso_urls": [
+        "{{ user `iso_path` }}/{{ user `iso_name` }}",
+        "{{ user `iso_url` }}"
+      ],
+      "output_directory": "{{ user `packer_base` }}/output",
+      "shutdown_command": "{{ user `shutdown_command` }}",
+      "communicator": "ssh",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout" : "4h",
+      "ram_size": "{{ user `memory` }}",
+      "cpu": "{{ user `cpus` }}",
+      "generation": 2,
+      "enable_secure_boot": false
   }],
   "provisioners": [{
     "environment_vars": [
@@ -75,5 +100,11 @@
       "scripts/oel/cleanup.sh"
     ],
     "type": "shell"
+  }],
+  "post-processors": [{
+    "type": "vagrant",
+    "keep_input_artifact": false,
+    "output": "{{ user `packer_base` }}/box/{{.Provider}}/{{user `vm_name`}}.box",
+    "compression_level": 9
   }]
 }
