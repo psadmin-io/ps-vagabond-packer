@@ -106,5 +106,11 @@
     "keep_input_artifact": false,
     "output": "{{ user `packer_base` }}/box/{{.Provider}}/{{user `vm_name`}}.box",
     "compression_level": 9
+  }, {
+    "type": "vagrant-cloud",
+    "box_tag": "jrbing/ps-vagabond",
+    "version": "{{ user `version` }}",
+    "version_description": "{{ user `version_description`}}",
+    "no_release": "true"
   }]
 }
