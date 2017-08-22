@@ -1,6 +1,6 @@
 ---
 
-before-script:
+before_script:
   - packer version
 
 stages:
