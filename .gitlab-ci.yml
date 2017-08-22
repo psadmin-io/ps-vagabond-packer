@@ -20,6 +20,8 @@ inspect-packerfile:
 
 build-oel-hyperv:
   stage: build
+  variables:
+    PACKER_BASE: 'C:\psoft\packer_base'
   script:
     - packer build -only=hyperv ps-vagabond-oel.json
   when: manual
