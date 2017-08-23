@@ -23,7 +23,7 @@ build-oel-hyperv:
   variables:
     PACKER_BASE: 'C:\psoft\packer_base'
   script:
-    - packer build -only=hyperv ps-vagabond-oel.json
+    - packer build -force -only=hyperv ps-vagabond-oel.json
   when: manual
   tags:
     - windows
@@ -34,7 +34,7 @@ build-oel-virtualbox:
   variables:
     PACKER_BASE: 'D:\packer_base'
   script:
-    - packer build -only=virtualbox ps-vagabond-oel.json
+    - packer build -force -only=virtualbox ps-vagabond-oel.json
   when: manual
   tags:
     - windows
