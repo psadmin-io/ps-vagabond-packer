@@ -5,6 +5,7 @@
     "cpus": "1",
     "disk_size": "163840",
     "headless": "true",
+    "cloud_token": "{{ env `VAGRANT_CLOUD_TOKEN` }}",
     "iso_checksum": "130ee6cda827aa092b6eb66a145420f9801aa321",
     "iso_checksum_type": "sha1",
     "iso_name": "OracleLinux-R7-U3-Server-x86_64-dvd.iso",
@@ -101,16 +102,20 @@
     ],
     "type": "shell"
   }],
-  "post-processors": [{
-    "type": "vagrant",
-    "keep_input_artifact": false,
-    "output": "{{ user `packer_base` }}/box/{{.Provider}}/{{user `vm_name`}}.box",
-    "compression_level": 9
-  }, {
-    "type": "vagrant-cloud",
-    "box_tag": "jrbing/ps-vagabond",
-    "version": "{{ user `version` }}",
-    "version_description": "{{ user `version_description`}}",
-    "no_release": "true"
-  }]
+  "post-processors": [
+    [{
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "output": "{{ user `packer_base` }}/box/{{.Provider}}/{{user `vm_name`}}.box",
+      "vagrantfile_template": "templates/vagrantfile-oel.template",
+      "compression_level": 9
+    },{
+      "type": "vagrant-cloud",
+      "access_token": "{{ user `cloud_token` }}",
+      "box_tag": "jrbing/ps-vagabond",
+      "version": "{{ user `version` }}",
+      "version_description": "{{ user `version_description`}}",
+      "no_release": "true"
+    }]
+  ]
 }
