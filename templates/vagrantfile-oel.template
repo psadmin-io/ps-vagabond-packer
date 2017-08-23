@@ -1,0 +1,17 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.guest = :linux
+  config.vm.boot_timeout = 300
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.memory = 512
+  end
+
+  config.vm.provider 'hyperv' do |hv|
+    hv.ip_address_timeout = 240
+    hv.memory = 512
+  end
+end
