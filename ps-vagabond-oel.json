@@ -29,7 +29,7 @@
         "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ks7.cfg<enter>"
       ],
       "disk_size": "{{ user `disk_size` }}",
-      "boot_wait": "10s",
+      "boot_wait": "20s",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "guest_os_type": "{{ user `virtualbox_guest_os_type` }}",
       "hard_drive_interface": "sata",
