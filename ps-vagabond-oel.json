@@ -52,7 +52,9 @@
         ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"]
       ],
       "virtualbox_version_file": ".vbox_version",
-      "vrdp_bind_address": "0.0.0.0"
+      "vrdp_bind_address": "0.0.0.0",
+      "vrdp_port_min": 5915,
+      "vrdp_port_max": 5915
     },{
       "name": "hyperv",
       "type": "hyperv-iso",
