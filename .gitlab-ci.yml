@@ -12,11 +12,13 @@ validate-packerfile:
   stage: validate
   script:
     - packer validate ps-vagabond-oel.json
+    - packer validate ps-vagabond-win.json
 
 inspect-packerfile:
   stage: inspect
   script:
     - packer inspect ps-vagabond-oel.json
+    - packer inspect ps-vagabond-win.json
 
 build-oel-hyperv:
   stage: build
