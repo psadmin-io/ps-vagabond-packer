@@ -39,3 +39,25 @@ build-oel-virtualbox:
   tags:
     - windows
     - virtualbox
+
+build-windows-hyperv:
+  stage: build
+  variables:
+    PACKER_BASE: 'C:\psoft\packer_base'
+  script:
+    - packer build -force -only=hyperv ps-vagabond-win.json
+  when: manual
+  tags:
+    - windows
+    - hyperv
+
+build-windows-virtualbox:
+  stage: build
+  variables:
+    PACKER_BASE: 'D:\packer_base'
+  script:
+    - packer build -force -only=virtualbox ps-vagabond-win.json
+  when: manual
+  tags:
+    - windows
+    - virtualbox
