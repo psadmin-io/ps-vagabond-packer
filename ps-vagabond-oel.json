@@ -26,7 +26,7 @@
       "type": "virtualbox-iso",
       "vm_name": "{{ user `vm_name` }}",
       "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ks7.cfg<enter>"
+        "<tab><bs><bs><bs><bs><bs> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ks7.cfg<enter>"
       ],
       "disk_size": "{{ user `disk_size` }}",
       "boot_wait": "20s",
