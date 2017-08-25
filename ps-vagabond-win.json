@@ -18,7 +18,7 @@
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
         ["modifyvm", "{{.Name}}", "--vram", "48" ],
-        ["modifyvm", "{{.Name}}", "--cpus", "1"]
+        ["modifyvm", "{{.Name}}", "--cpus", "2"]
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
@@ -48,6 +48,7 @@
       "type": "hyperv-iso",
       "guest_additions_mode": "disable",
       "ram_size": "{{ user `memory` }}",
+      "cpu": 2,
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_urls": [
