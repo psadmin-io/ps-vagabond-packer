@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.guest = :linux
+  config.vm.guest = :redhat
   config.vm.boot_timeout = 300
 
   config.vm.provider "virtualbox" do |vb|

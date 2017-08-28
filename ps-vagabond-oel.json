@@ -16,8 +16,8 @@
     "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
-    "version": "1.0.2",
-    "version_description": "Updates and new HyperV version",
+    "version": "1.0.3",
+    "version_description": "OEL 7.4 and fix for vm.guest configuration",
     "virtualbox_guest_os_type": "Oracle_64",
     "vm_name": "ps-vagabond_ol7"
   },
