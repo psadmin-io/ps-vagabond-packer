@@ -67,9 +67,10 @@
     "core": "",
     "guest_additions_mode": "attach",
     "headless": "true",
-    "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
-    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO",
+    "iso_checksum": "e634269ef78f1181859f88708c6d03c12a250f4b66d8cbd3de2e3c18da1f96ff",
+    "iso_checksum_type": "sha256",
+   "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
     "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
   }
 }
