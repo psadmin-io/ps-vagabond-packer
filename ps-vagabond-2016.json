@@ -8,7 +8,6 @@
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
-      "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
       "guest_os_type": "Windows2016_64",
       "disk_size": "204800",
       "headless": "{{ user `headless` }}",
@@ -33,7 +32,6 @@
       "cookbook_paths": ["cookbooks"],
       "guest_os_type": "windows",
       "run_list": [
-        "wsus-client::configure",
         "packer-templates::install_ps_modules",
         "packer-templates::vbox_guest_additions",
         "packer-templates::uninstall_powershell_ise",
