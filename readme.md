@@ -8,6 +8,14 @@ These templates are used to generate the ps-vagabond-* vagrant base boxes found 
 packer build -force -only virtualbox-iso ps-vagabond.json
 ```
 
+To download the .iso files (instead of using a local copy), add this to the `ps-vagabond.json` file.
+
+**Windows 2016**
+
+```json
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO",
+```
+
 
 ## Background
 
@@ -21,6 +29,15 @@ You need the following to run the template:
 
 1. [Packer](https://packer.io/docs/installation.html) installed with a minimum version of 0.12.3.
 2. [VirtualBox](https://www.virtualbox.org/wiki/Downloads) - Tested with 5.1.12
+3. [Berkshelf](http://berkshelf.com/) - Used to find and vendor Chef cookbook dependencies. This is easist installing via the [ChefDK](https://downloads.chef.io/chef-dk/)
+
+## Vendoring the cookbooks
+The Windows 2016 templates use the `packer-templates` Chef cookbook to provision the image. The cookbook located in `cookbooks/packer-templates` has dependencies on a few community cookbooks. These cookbooks need to be downloaded. To do this:
+
+1. `cd` to `cookbooks/packer-templates`
+2. Run `berks vendor ../../vendor/cookbooks`
+
+This downloads all dependencies and saves them in vendor/cookbooks. From here packer will upload them to the image being built.
 
 ## Invoking the template
 Invoke `packer` to run a template like this:

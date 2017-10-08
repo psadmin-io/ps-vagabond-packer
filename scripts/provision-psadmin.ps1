@@ -1,5 +1,4 @@
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
-# choco install jdk7 -y
 choco install git -params '"/GitAndUnixToolsOnPath"' -y
 choco install procexp -y
 choco install beyondcompare -y

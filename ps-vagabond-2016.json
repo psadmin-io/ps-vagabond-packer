@@ -4,73 +4,103 @@
       "type": "virtualbox-iso",
       "vboxmanage": [
         [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
+        [ "modifyvm", "{{.Name}}", "--vram", "48" ],
         [ "modifyvm", "{{.Name}}", "--cpus", "2" ]
       ],
       "guest_additions_mode": "{{ user `guest_additions_mode` }}",
       "guest_additions_path": "C:/users/vagrant/VBoxGuestAdditions.iso",
-      "guest_os_type": "Windows2012_64",
+      "guest_os_type": "Windows2016_64",
       "disk_size": "204800",
       "headless": "{{ user `headless` }}",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "md5",
       "communicator": "winrm",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
-      "shutdown_command": "a:/PackerShutdown.bat",
+      "shutdown_command": "C:/Windows/Panther/Unattend/packer_shutdown.bat",
       "shutdown_timeout": "15m",
       "floppy_files": [
-        "answer_files/2012_r2{{user `core`}}/Autounattend.xml",
-        "scripts/postunattend.xml",
-        "scripts/boxstarter.ps1",
-        "scripts/PackerShutdown.bat",
-        "scripts/package.ps1",
-        "scripts/SetupComplete-2012.cmd",
-        "scripts/Test-Command.ps1"
+        "answer_files/2016/Autounattend.xml",
+        "scripts/winrm.ps1"
       ]
     }
   ],
   "provisioners": [
     {
-      "type": "powershell",
-      "inline": ["choco install powershell -y"],
-      "elevated_user": "vagrant",
-      "elevated_password": "vagrant",
-      "valid_exit_codes": [
-        0,
-        3010
+      "type": "chef-solo",
+      "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
+      "guest_os_type": "windows",
+      "run_list": [
+        "wsus-client::configure",
+        "packer-templates::install_ps_modules",
+        "packer-templates::vbox_guest_additions",
+        "packer-templates::uninstall_powershell_ise",
+        "packer-templates::delete_pagefile"
       ]
     },
     {
+      "type": "powershell",
+      "script": "scripts/windows-updates.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
+    {
       "type": "windows-restart",
-      "restart_timeout": "1h"
+      "restart_timeout": "15m"
     },
     {
       "type": "powershell",
-      "script": "scripts/provision.ps1"
+      "script": "scripts/after-reboot.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
+    {
+      "type": "chef-solo",
+      "remote_cookbook_paths": [
+        "c:/windows/temp/packer-chef-solo/cookbooks-0",
+        "c:/windows/temp/packer-chef-solo/cookbooks-1"
+      ],
+      "guest_os_type": "windows",
+      "skip_install": "true",
+      "run_list": [
+        "packer-templates::enable_file_sharing",
+        "packer-templates::remote_desktop",
+        "packer-templates::clean_sxs",
+        "packer-templates::add_postunattend",
+        "packer-templates::add_pagefile",
+        "packer-templates::set_local_account_token_filter_policy",
+        "packer-templates::remove_dirs",
+        "packer-templates::add_setup_complete"
+      ]
     },
     {
       "type": "powershell",
-      "script": "scripts/provision-psadmin.ps1"
+      "script": "scripts/provision-psadmin.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
+    {
+      "type": "powershell",
+      "script": "scripts/cleanup.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
     }
   ],
   "post-processors": [
     [{
       "type": "vagrant",
-      "keep_input_artifact": false,
-      "output": "ps-vagabond-win-{{.Provider}}.box",
+      "keep_input_artifact": true,
+      "output": "ps-vagabond-win-2016-{{.Provider}}.box",
       "vagrantfile_template": "vagrantfile-windows.template"
     }]
   ],
   "variables": {
-    "core": "",
     "guest_additions_mode": "attach",
     "headless": "true",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO",
-    "iso_checksum": "e634269ef78f1181859f88708c6d03c12a250f4b66d8cbd3de2e3c18da1f96ff",
-    "iso_checksum_type": "sha256",
-   "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
-    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+    "iso_checksum": "18a4f00a675b0338f3c7c93c4f131beb",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO"
   }
 }
+
