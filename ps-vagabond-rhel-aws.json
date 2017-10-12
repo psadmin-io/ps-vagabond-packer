@@ -39,14 +39,12 @@
     "launch_block_device_mappings": [{
       "device_name": "/dev/sda1",
       "volume_size": "{{ user `volume_size` }}",
-      "volume_type": "gp2",
       "encrypted": false,
       "delete_on_termination": true
     }],
     "ami_block_device_mappings": [{
       "device_name": "/dev/sda1",
       "volume_size": "{{ user `volume_size` }}",
-      "volume_type": "gp2",
       "encrypted": false,
       "delete_on_termination": true
     }]
