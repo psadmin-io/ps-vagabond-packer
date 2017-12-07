@@ -69,6 +69,7 @@
       "scripts/oel/epel.sh",
       "scripts/oel/update.sh",
       "scripts/oel/aria.sh",
+      "scripts/oel/packages.sh",
       "scripts/oel/vagrant.sh",
       "scripts/oel/virtualbox.sh",
       "scripts/oel/motd.sh",
