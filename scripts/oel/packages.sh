@@ -11,16 +11,18 @@ function echoinfo() {
   printf "${BC} ☆  INFO${EC}: %s\n" "$@";
 }
 
+function update_packages() {
+  echoinfo "Updating installed packages"
+  sudo yum update -y
+}
+
 function install_additional_packages() {
   echoinfo "Installing additional packages"
   for package in "${additional_packages[@]}"; do
-    if [[ -n ${DEBUG+x} ]]; then
-      echodebug "Installing ${package}"
-      sudo yum install -y "${package}"
-    else
-      sudo yum install -y "${package}" > /dev/null 2>&1
-    fi
+    echodebug "Installing ${package}"
+    sudo yum install -y "${package}"
   done
 }
 
+update_packages
 install_additional_packages
