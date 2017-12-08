@@ -10,7 +10,7 @@
     "iso_name": "OracleLinux-R7-U3-Server-x86_64-dvd.iso",
     "iso_path": "{{env `PACKER_BASE`}}/iso",
     "iso_url": "http://mirrors.kernel.org/oracle/OL7/u3/x86_64/OracleLinux-R7-U3-Server-x86_64-dvd.iso",
-    "kickstart": "ks7.cfg",
+    "kickstart": "ks7efi.cfg",
     "memory": "512",
     "packer_base": "{{env `PACKER_BASE`}}",
     "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
