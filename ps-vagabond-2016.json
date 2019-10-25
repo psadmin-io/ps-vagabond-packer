@@ -22,13 +22,14 @@
       "shutdown_timeout": "15m",
       "floppy_files": [
         "answer_files/2016/Autounattend.xml",
-        "scripts/winrm.ps1"
+        "scripts/win/winrm.ps1"
       ]
     }
   ],
   "provisioners": [
     {
       "type": "chef-solo",
+      "version": "13.9.1",
       "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
       "guest_os_type": "windows",
       "run_list": [
@@ -41,7 +42,7 @@
     },
     {
       "type": "powershell",
-      "script": "scripts/windows-updates.ps1",
+      "script": "scripts/win/windows-updates.ps1",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant"
     },
@@ -51,7 +52,7 @@
     },
     {
       "type": "powershell",
-      "script": "scripts/after-reboot.ps1",
+      "script": "scripts/win/after-reboot.ps1",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant"
     },
@@ -76,13 +77,13 @@
     },
     {
       "type": "powershell",
-      "script": "scripts/provision-psadmin.ps1",
+      "script": "scripts/win/provision-psadmin.ps1",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant"
     },
     {
       "type": "powershell",
-      "script": "scripts/cleanup.ps1",
+      "script": "scripts/win/cleanup.ps1",
       "elevated_user": "vagrant",
       "elevated_password": "vagrant"
     }
@@ -92,7 +93,7 @@
       "type": "vagrant",
       "keep_input_artifact": true,
       "output": "ps-vagabond-win-2016-{{.Provider}}.box",
-      "vagrantfile_template": "vagrantfile-windows.template"
+      "vagrantfile_template": "templates/vagrantfile-windows.template"
     }]
   ],
   "variables": {
