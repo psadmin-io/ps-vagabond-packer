@@ -29,6 +29,7 @@
   "provisioners": [
     {
       "type": "chef-solo",
+      "version": "13.9.1",
       "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
       "guest_os_type": "windows",
       "run_list": [
@@ -92,7 +93,7 @@
       "type": "vagrant",
       "keep_input_artifact": true,
       "output": "ps-vagabond-win-2016-{{.Provider}}.box",
-      "vagrantfile_template": "vagrantfile-windows.template"
+      "vagrantfile_template": "templates/vagrantfile-windows.template"
     }]
   ],
   "variables": {
