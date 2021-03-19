@@ -1,5 +1,5 @@
 powershell_script 'install Nuget package provider' do
-  code 'Install-PackageProvider -Name NuGet -Force'
+  code '[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Install-PackageProvider -Name NuGet -Force'
   not_if '(Get-PackageProvider -Name Nuget -ListAvailable -ErrorAction SilentlyContinue) -ne $null'
 end
 

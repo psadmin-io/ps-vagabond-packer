@@ -7,7 +7,7 @@ SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail
 
 packer_templates = $(wildcard *.json)
-packer_base = $(PACKER_BASE)
+packer_base = $(pwd)
 
 all: build 
 

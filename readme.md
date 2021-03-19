@@ -1,6 +1,32 @@
 # ps-vagabond Packer Templates
 
-> This repository is a clone of mwrock/packer-templates.
+## Windows 2019
+
+> Packer template and scripts from https://github.com/eaksel/packer-Win2019
+
+There are 4 supported images in this release for Windows 2019:
+
+* Windows Core or with GUI
+* VirtualBox and VMWare
+
+```bash
+$ packer build -only virtualbox-iso ps-vagabond-2019-gui.json
+$ packer build -only virtualbox-iso ps-vagabond-2019-core.json
+$ packer build -only vmware-iso ps-vagabond-2019-gui.json
+$ packer build -only vmware-iso ps-vagabond-2019-core.json
+```
+
+Once the build is done, you can use the `.box` file. We have uploaded the box to Vagrant Cloud and can be used as: ``
+
+## Oracle Linux 7
+
+```bash
+$ packer build ps-vagabond-oel.json
+```
+
+## Windows 2016 and earlier
+
+> This repository is a clone of mwrock/packer-templates
 
 These templates are used to generate the ps-vagabond-* vagrant base boxes found on Atlas. To build the VirtualBox templates:
 

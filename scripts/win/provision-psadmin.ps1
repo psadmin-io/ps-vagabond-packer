@@ -1,9 +1,11 @@
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 $packages = "git -params '`"/GitAndUnixToolsOnPath`"'", "procexp", "beyondcompare", "handle", "agentransack", "aria2", "rsync", "wget", "jq"
 
 foreach ($package in $packages) {
-    choco install "${element}" -y
+    choco install "${package}" -y
 }
 
 If (Test-Path Alias:wget) {Remove-Item Alias:wget}
