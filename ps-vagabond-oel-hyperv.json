@@ -77,7 +77,7 @@
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
     "version": "1.0.5",
-    "version_description": "Update to OEL 7.5",
+    "version_description": "Update to OEL 7.9",
     "vm_name": "ps-vagabond_ol7"
   }
 }
