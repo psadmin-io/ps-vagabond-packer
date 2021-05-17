@@ -15,6 +15,7 @@
       "enable_secure_boot": false,
       "generation": 2,
       "guest_additions_mode": "disable",
+      "guest_os_type": "Oracle_64",
       "http_directory": "./http",
       "iso_checksum": "{{ user `iso_checksum_type` }}:{{ user `iso_checksum` }}",
       "iso_urls": [
@@ -65,7 +66,7 @@
     "cpus": "1",
     "disk_size": "163840",
     "headless": "true",
-    "iso_checksum": "d0cc4493db10c2a49084f872083ed9ed6a09cc065064c009734712b9ef357886",
+    "iso_checksum": "dc2782bfd92b4c060cf8006fbc6e18036c27f599eebf3584a1a2ac54f008bf2f",
     "iso_checksum_type": "sha256",
     "iso_name": "OracleLinux-R7-U9-Server-x86_64-dvd.iso",
     "iso_path": "{{ env `PACKER_BASE` }}/iso",
@@ -77,7 +78,7 @@
     "ssh_password": "vagrant",
     "ssh_username": "vagrant",
     "version": "1.0.5",
-    "version_description": "Update to OEL 7.5",
+    "version_description": "Update to OEL 7.9",
     "vm_name": "ps-vagabond_ol7"
   }
 }
